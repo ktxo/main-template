@@ -117,7 +117,6 @@ def parse_args():
 
 LOG_LEVELS={'I':logging.INFO,'D':logging.DEBUG,'W':logging.WARNING,'E':logging.ERROR}
 def init_log(args):
-    print(args)
     if args.log:
         with open(args.log, 'r', encoding="utf-8") as fd:
             logging.config.dictConfig(json.load(fd))
@@ -146,7 +145,6 @@ def init_cfg(args):
 def main():
 
     args = parse_args()
-
     init_log(args)
     init_cfg(args)
 
