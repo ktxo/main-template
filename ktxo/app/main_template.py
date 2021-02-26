@@ -134,7 +134,7 @@ def init_log(args):
 def init_cfg(args):
     global CONFIG
     if args.config:
-        with open(args.log, 'r', encoding="utf-8") as fd:
+        with open(args.config, 'r', encoding="utf-8") as fd:
             CONFIG = json.load(fd)
     # Override some option
 
