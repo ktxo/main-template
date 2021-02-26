@@ -1,0 +1,7 @@
+{
+  "int_val": 1,
+  "xx": {
+    "opt1": 1,
+    "opt2": "Some option"
+  }
+}

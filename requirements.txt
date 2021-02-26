@@ -1,0 +1,9 @@
+#
+# main-template requirements
+# must match the defined in setup.py: install_requires=[]
+#
+# Conda configuration
+# conda create  --yes --name XX python=3.7.0
+# conda install --yes --name XX --file requirements.txt
+#
+
