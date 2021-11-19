@@ -5,7 +5,7 @@
       "handlers": ["console"],
       "level": "INFO"
     },
-    "ktxo.seek": {
+    "ktxo.app": {
       "propagate": false,
       "handlers": ["console", "file"],
       "level": "INFO"
@@ -30,7 +30,7 @@
     "file": {
       "class": "logging.handlers.RotatingFileHandler",
       "formatter": "basic",
-      "filename": "seek.log",
+      "filename": "main-template.log",
       "backupCount": 10,
       "maxBytes": 10485760
     }
