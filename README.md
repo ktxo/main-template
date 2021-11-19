@@ -9,7 +9,7 @@ Basic template for python application
 Well, purpose is to provide a *simple* skeleton for application, including :
 
 - Simple skeleton for app
-- Command arg parse (argparse) (including common options: -h=help, -l=logging ,-c=configuratio)
+- Command arg parse (argparse) (including common options: -h=help, -l=logging ,-c=configuration)
 - Logging module (https://docs.python.org/3.9/library/logging.html)
 - Installation (as module and script)
 
@@ -22,7 +22,9 @@ Well, purpose is to provide a *simple* skeleton for application, including :
 git clone git@github.com:ktxo/main-template.git mybot
 ```
 
-- Change 
+### Changes
+
+You can apply all these changes or execute script [config_template.py](), see below 
 
 - Rename the following according to your app:
     1. Package directories "ktxo/app" to something related to your app, for example: "myorg/bot" (for a "bot" app)
@@ -66,6 +68,55 @@ git clone git@github.com:ktxo/main-template.git mybot
 - Review command args for your app, see **parse_args()**
 - Code your app
 - Enjoy it!
+
+
+### config_template.py
+
+This script execute all the above changes for you, it will prompt for values, to execute :
+``` 
+# assuming that repo was cloned to "mybot"
+$ cd mybot
+$ python config_template.py
+
+---------------------------------------------
+---------------------------------------------
+Please enter values (ENTER to use default or 'None' to empty):
+proj_name (main_template)                         :app_sample
+proj_version (0.1.0)                              :
+proj_date (2021-11-19)                            :
+proj_author (ktxo)                                :Me
+proj_author_email (support@ktxo.com)              :support@me.com
+proj_url (git@github.com:ktxo/main-template.git)  :None
+proj_description (Application template)           :Sample application
+proj_description_message (Brief description of this script):A more detailed description....
+proj_license (Copyright 2020, Ktxo)               :Me, 2021
+proj_app_script_name (main_template)              :app_main
+app_package (ktxo.app)                            :me.sample
+app_min_python (3.7)                              :3.9
+app_keyword (app template)                        :app sample test
+....
+```
+Then you can build and  install
+``` 
+$ python setup.py bdist_wheel
+$ cd  dist ; pip install *whl;cd -
+$ app_sample -v
+app_sample v0.1.0 (2021-11-19) by Me
+Python version 3.9.7 (default, Sep 10 2021, 13:09:58) [GCC 7.5.0]
+Other version n.n.n
+
+$ pip show app_sample
+Name: app-sample
+Version: 0.1.0
+Summary: A more detailed edescription....
+Home-page: UNKNOWN
+Author: Me
+Author-email: support@me.com
+License: Me, 2021
+Location: /sw/anaconda/envs/test/lib/python3.9/site-packages
+Requires: 
+Required-by: 
+``` 
 
 ## Application installation and execution
 
