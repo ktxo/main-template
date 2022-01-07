@@ -3,8 +3,10 @@ Template configuration tool for main-template
 """
 import os
 import pprint
+import json
 import re
 import shutil
+import sys
 
 from datetime import datetime
 
@@ -24,10 +26,9 @@ DEFAULT = {
     "app_min_python": "3.7",
     "app_keyword": "app template"
 }
-
+config={}
 #---------------------------------------------------------------------------
 def read_config():
-    config ={}
     print("---------------------------------------------")
     print("Please enter values (ENTER to use default or 'None' to empty):")
     for k,v in DEFAULT.items():
@@ -154,9 +155,36 @@ def refactor_package():
 # Main
 #---------------------------------------------------------------------------
 if __name__ == '__main__':
-    config = read_config()
-    refactor__about_py()
-    refactor_setup_py()
-    refactor_main_template_py()
-    refactor_package()
+    if len(sys.argv) > 1 and sys.argv[1].lower() in ['-h', '--help','?']:
+        print("""
+Usage: python config_template.py [arg] 
+
+ Dump default values to 'config_template.json'
+   $> python config_template.py default
+   
+ Load values from a file (e.g. config_template.json)
+   $> python config_template.py <path to configuration file>
+ 
+ Prompt for values
+   $> python config_template.py
+ 
+""")
+    elif len(sys.argv) > 1 and sys.argv[1] == "default":
+        with open("config_template.json", "w") as fd:
+            json.dump(DEFAULT,fd,sort_keys=False, indent=4)
+        print("Default configuration saved to 'config_template.json'")
+    elif len(sys.argv) > 1:
+        print(f"Using configuration from '{sys.argv[1]}'")
+        with open(sys.argv[1], "r") as fd:
+            config.update(json.load(fd))
+        refactor__about_py()
+        refactor_setup_py()
+        refactor_main_template_py()
+        refactor_package()
+    else:
+        config = read_config()
+        refactor__about_py()
+        refactor_setup_py()
+        refactor_main_template_py()
+        refactor_package()
 
