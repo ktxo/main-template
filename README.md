@@ -72,7 +72,7 @@ You can apply all these changes or execute script [config_template.py](), see be
 
 ### config_template.py
 
-This script execute all the above changes for you, it will prompt for values, to execute :
+This script execute all the above changes for you, the script can read the configuration from a json file (created executing __python config_template.py default__) or asking for the values:
 ``` 
 # assuming that repo was cloned to "mybot"
 $ cd mybot
@@ -96,6 +96,8 @@ app_min_python (3.7)                              :3.9
 app_keyword (app template)                        :app sample test
 ....
 ```
+
+
 Then you can build and  install
 ``` 
 $ python setup.py bdist_wheel
