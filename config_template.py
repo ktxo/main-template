@@ -80,6 +80,8 @@ def refactor_setup_py():
     lines = update_content(lines, "main_template", config["proj_name"])
     value = config["app_package"].split(".")[0]
     lines = update_content(lines, "ktxo.*", value + ".*")
+    app_min_python = config["app_min_python"]
+    lines = update_content(lines, "python_requires='>=3.7'", f"python_requires='>={app_min_python}',")
     lines = update_content(lines, "Python :: 3.7", config["app_min_python"])
     lines = update_content(lines, "app template", config["app_keyword"])
 
@@ -97,6 +99,18 @@ def refactor_main_template_py():
 
     lines = update_content(lines, "@@Application Template@@", config["proj_description"])
     lines = update_content(lines, "ktxo.app", config["app_package"])
+
+    update_file(filename, lines)
+#---------------------------------------------------------------------------
+def refactor_logging_json():
+    ## logging.json
+    # "ktxo.app": {
+    #  "filename": "main-template.log",
+    filename = "logging.json"
+    lines = read_file(filename)
+
+    lines = update_content(lines, "ktxo.app", config["app_package"])
+    lines = update_content(lines, "main-template.log", config["proj_app_script_name"]+".log")
 
     update_file(filename, lines)
 #---------------------------------------------------------------------------
@@ -180,11 +194,13 @@ Usage: python config_template.py [arg]
         refactor__about_py()
         refactor_setup_py()
         refactor_main_template_py()
+        refactor_logging_json()
         refactor_package()
     else:
         config = read_config()
         refactor__about_py()
         refactor_setup_py()
         refactor_main_template_py()
+        refactor_logging_json()
         refactor_package()
 
