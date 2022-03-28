@@ -81,7 +81,7 @@ def refactor_setup_py():
     value = config["app_package"].split(".")[0]
     lines = update_content(lines, "ktxo.*", value + ".*")
     app_min_python = config["app_min_python"]
-    lines = update_content(lines, "python_requires='>=3.7'", f"python_requires='>={app_min_python}',")
+    lines = update_content(lines, "python_requires='>=3.7'", f"python_requires='>={app_min_python}'")
     lines = update_content(lines, "Python :: 3.7", config["app_min_python"])
     lines = update_content(lines, "app template", config["app_keyword"])
 
