@@ -24,7 +24,8 @@ DEFAULT = {
     "proj_app_script_name": "main_template",
     "app_package": "ktxo.app",
     "app_min_python": "3.7",
-    "app_keyword": "app template"
+    "app_keyword": "app template",
+    "app_encrypt_key": "MaZ1!-%!ls98A-2X"
 }
 config={}
 #---------------------------------------------------------------------------
@@ -94,6 +95,7 @@ def refactor_main_template_py():
     # _log = logging.getLogger("ktxo.app") # loggers
     #     "proj_description" : "Application template",
     #     "app_package": "ktxo.app",
+    # import ktxo.app._about as about
     filename = os.path.join("ktxo", "app", "main_template.py")
     lines = read_file(filename)
 
@@ -147,6 +149,21 @@ def refactor__about_py():
     update_file(filename, lines)
 
 #---------------------------------------------------------------------------
+def refactor_build_exe_py():
+    ## build_exe_py
+    # app_encrypt_key ='main_template'
+
+    filename = os.path.join("build_exe.py")
+    lines = read_file(filename)
+    lines = update_content(lines, "app_encrypt_key=.*", config["proj_description"])
+    v = config["app_encrypt_key"]
+    nl="\n"
+    lines = update_content(lines, re.compile('app_encrypt_key=.*$'), f'app_encrypt_key="{v}"{nl}')
+    #lines = update_content(lines, "ktxo/app/main_template.py", f'{config["app_package"]}.{config["proj_app_script_name"]}.py')
+    v = (f'{config["app_package"]}.{config["proj_app_script_name"]}').replace(".","/")+ ".py"
+    lines = update_content(lines, "ktxo/app/main_template.py", v)
+    update_file(filename, lines)
+#---------------------------------------------------------------------------
 def refactor_package():
     p = os.path.join(*config["app_package"].split("."))
     os.makedirs(p, exist_ok=True)
@@ -195,6 +212,7 @@ Usage: python config_template.py [arg]
         refactor_setup_py()
         refactor_main_template_py()
         refactor_logging_json()
+        refactor_build_exe_py()
         refactor_package()
     else:
         config = read_config()
@@ -202,5 +220,6 @@ Usage: python config_template.py [arg]
         refactor_setup_py()
         refactor_main_template_py()
         refactor_logging_json()
+        refactor_build_exe_py()
         refactor_package()
 

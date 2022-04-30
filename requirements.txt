@@ -7,3 +7,5 @@
 # conda install --yes --name XX --file requirements.txt
 #
 
+# Required by build_exe.py
+pyinstaller[encryption]

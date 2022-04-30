@@ -12,7 +12,7 @@ Well, purpose is to provide a *simple* skeleton for application, including :
 - Command arg parse (argparse) (including common options: -h=help, -l=logging ,-c=configuration)
 - Logging module (https://docs.python.org/3.9/library/logging.html)
 - Installation (as module and script)
-
+- Single executable file (pyinstaller) 
 
 ## How to use
 
@@ -46,6 +46,17 @@ You can apply all these changes or execute script [config_template.py](), see be
     ![example](example.png)
   
     5. Add the code to *mybot_app.py*, **don't forget to change doc and logger name!**
+       1. Edit [build_exe](build_exe.py)
+          - Note the following lines 
+             ```
+             app_encrypt_key="MaZ1!-%!ls98A-2X"
+             ```
+             Must match your application script
+             ```
+             "ktxo/app/main_template.py",
+             ```
+            Your encryption key (requires **pyinstaller\[encryption\]**, see [requirements.txt ](requirements.txt))
+       
     
 - If you don't need a configuration file, remove the following lines:
     - Parse config option 
@@ -94,6 +105,7 @@ proj_app_script_name (main_template)              :app_main
 app_package (ktxo.app)                            :me.sample
 app_min_python (3.7)                              :3.9
 app_keyword (app template)                        :app sample test
+app_encrypt_key (MaZ1!-%!ls98A-2X)                :1234567890
 ....
 ```
 
@@ -119,6 +131,7 @@ Location: /sw/anaconda/envs/test/lib/python3.9/site-packages
 Requires: 
 Required-by: 
 ``` 
+Or build executable with Pyinstaller, see below []()
 
 ## Application installation and execution
 
@@ -164,3 +177,17 @@ Python version 3.8.5 (default, Sep  4 2020, 07:30:14) [GCC 7.3.0]
 Other version n.n.n
 
 ```
+
+## Build executable
+The script [build_exe.py](build_exe.py) allow to build a single executable with [Pyinstaller](https://pyinstaller.org/)
+
+- By default files will be encrypted (see https://pyinstaller.org/en/stable/usage.html#encrypting-python-bytecode)
+- This script requires **pyinstaller\[encryption\]**, see [requirements.txt ](requirements.txt)
+- Will create **onefile** executable (https://pyinstaller.org/en/stable/usage.html#cmdoption-F)
+
+```
+$ python build_exe.py
+```
+
+Executable file will be located in **dist/<proj_app_script_name>**
+ 
