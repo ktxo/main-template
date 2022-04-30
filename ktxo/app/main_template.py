@@ -9,7 +9,7 @@ import logging.config
 import os
 import sys
 
-from . import _about as about
+import ktxo.app._about as about
 
 
 
