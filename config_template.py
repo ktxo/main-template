@@ -25,7 +25,9 @@ DEFAULT = {
     "app_package": "ktxo.app",
     "app_min_python": "3.7",
     "app_keyword": "app template",
-    "app_encrypt_key": "MaZ1!-%!ls98A-2X"
+    "app_encrypt_key": "MaZ1!-%!ls98A-2X",
+    "app_home_variable": "APP_HOME",
+    "app_home": "/usr/local/main_template"
 }
 config={}
 #---------------------------------------------------------------------------
@@ -181,6 +183,25 @@ def refactor_package():
             if P1[i] != P2[i]:
                 shutil.rmtree(os.path.join(*P1[0:i + 1]))
                 break
+#---------------------------------------------------------------------------
+def refactor_run_main_template():
+    #
+    filename = os.path.join("run_main_template.sh")
+    lines = read_file(filename)
+    lines = update_content(lines, "APP_HOME", config["app_home_variable"] )
+    lines = update_content(lines, "/tmp/main-template", config["app_home"] )
+    lines = update_content(lines, "./main_template", "./" + config["proj_app_script_name"])
+    update_file(filename, lines)
+    os.rename("run_main_template.sh", "run_"+config["proj_app_script_name"]+ ".sh")
+    #
+    filename = os.path.join("run_main_template.cmd")
+    lines = read_file(filename)
+    lines = update_content(lines, "APP_HOME", config["app_home_variable"])
+    lines = update_content(lines, "C:/tmp/main-template", config["app_home"])
+    lines = update_content(lines, ".\main_template", ".\"" + config["proj_app_script_name"])
+    update_file(filename, lines)
+    os.rename("run_main_template.cmd", "run_" + config["proj_app_script_name"] + ".cmd")
+
 
 #---------------------------------------------------------------------------
 # Main
@@ -213,6 +234,7 @@ Usage: python config_template.py [arg]
         refactor_main_template_py()
         refactor_logging_json()
         refactor_build_exe_py()
+        refactor_run_main_template()
         refactor_package()
     else:
         config = read_config()
@@ -221,5 +243,6 @@ Usage: python config_template.py [arg]
         refactor_main_template_py()
         refactor_logging_json()
         refactor_build_exe_py()
+        refactor_run_main_template()
         refactor_package()
 
