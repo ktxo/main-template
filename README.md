@@ -12,7 +12,9 @@ Well, purpose is to provide a *simple* skeleton for application, including :
 - Command arg parse (argparse) (including common options: -h=help, -l=logging ,-c=configuration)
 - Logging module (https://docs.python.org/3.9/library/logging.html)
 - Installation (as module and script)
-- Single executable file (pyinstaller) 
+- [Build a single executable file](#build-executable) (pyinstaller)
+- [Wrapper Script](#wrapper-script) (.sh/.cmd) to execute the application
+
 
 ## How to use
 
@@ -51,11 +53,12 @@ You can apply all these changes or execute script [config_template.py](), see be
              ```
              app_encrypt_key="MaZ1!-%!ls98A-2X"
              ```
-             Must match your application script
              ```
              "ktxo/app/main_template.py",
              ```
-            Your encryption key (requires **pyinstaller\[encryption\]**, see [requirements.txt ](requirements.txt))
+             Must match your application script
+          
+          Your encryption key (requires **pyinstaller\[encryption\]**, see [requirements.txt ](requirements.txt))
        
     
 - If you don't need a configuration file, remove the following lines:
@@ -106,6 +109,8 @@ app_package (ktxo.app)                            :me.sample
 app_min_python (3.7)                              :3.9
 app_keyword (app template)                        :app sample test
 app_encrypt_key (MaZ1!-%!ls98A-2X)                :1234567890
+app_home_variable (APP_HOME)                      :MAIN_TEMPLATE_HOME
+app_home (/usr/local/main_template)               :
 ....
 ```
 
@@ -131,7 +136,7 @@ Location: /sw/anaconda/envs/test/lib/python3.9/site-packages
 Requires: 
 Required-by: 
 ``` 
-Or build executable with Pyinstaller, see below []()
+Or build an executable with Pyinstaller, see below [Build executable](#build-executable)
 
 ## Application installation and execution
 
@@ -179,11 +184,13 @@ Other version n.n.n
 ```
 
 ## Build executable
-The script [build_exe.py](build_exe.py) allow to build a single executable with [Pyinstaller](https://pyinstaller.org/)
+The script [build_exe.py](build_exe.py) allows to build a single executable with [Pyinstaller](https://pyinstaller.org/)
 
 - By default files will be encrypted (see https://pyinstaller.org/en/stable/usage.html#encrypting-python-bytecode)
 - This script requires **pyinstaller\[encryption\]**, see [requirements.txt ](requirements.txt)
 - Will create **onefile** executable (https://pyinstaller.org/en/stable/usage.html#cmdoption-F)
+
+
 
 ```
 $ python build_exe.py
@@ -191,3 +198,20 @@ $ python build_exe.py
 
 Executable file will be located in **dist/<proj_app_script_name>**
  
+
+## Wrapper Script 
+
+There are two template scripts to run the app: 
+- [run_main_template.sh](run_main_template.sh) : Linux/Mac
+- [run_main_template.cmd](run_main_template.cmd): Windows
+
+These script provides an alternative to run the app with some preconfigured values, you can :
+1. Create a folder like **main-template-v0.1.0**
+2. [Build the executable](#build-executable) and copy the file to folder **main-template-v0.1.0**
+3. Copy the following files to **main-template-v0.1.0**:
+   1. [config.json](config.json) 
+   2. [logging.json](logging.json)
+   3. [run_main_template.sh](run_main_template.sh)
+   4. [run_main_template.cmd](run_main_template.cmd)
+4. Zip folder **main-template-v0.1.0** 
+5. Distribute this zip 
