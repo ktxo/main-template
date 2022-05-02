@@ -11,6 +11,5 @@ PyInstaller.__main__.run([
     "ktxo/app/main_template.py",
     "--onefile",
     f"--key={app_encrypt_key}",
-    "--clean",
-    "--windowed"
+    "--clean"
 ])
