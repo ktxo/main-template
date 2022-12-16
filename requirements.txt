@@ -9,3 +9,9 @@
 
 # Required by build_exe.py
 pyinstaller[encryption]
+
+# To generate README.html
+# Pandoc binary is needed, see:
+#  - https://pypi.org/project/pandoc/
+#  - https://pandoc.org/
+pandoc
