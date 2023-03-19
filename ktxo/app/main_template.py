@@ -73,6 +73,8 @@ def parse_args():
                                      epilog=example_usage,
                                      formatter_class=argparse.RawTextHelpFormatter)
 
+    parser.add_argument('-v', '--version', action='version', version=f"{get_version()[0]}")
+
     parser.add_argument("-i", "--int_val",
                         help="Some int value",
                         type=int,
@@ -97,14 +99,18 @@ def parse_args():
                         choices=['I','D','W','E'],
                         default='I')
 
-    parser.add_argument("-v", "--version",
-                        help="Show script version",
-                        action='store_true')
+    # Subparsers
+    subparsers = parser.add_subparsers(help="Commands available", dest="action")
+    parser_command_1 = argparse.ArgumentParser(add_help=False)
+    parser_command_1 = subparsers.add_parser("command_1", help="Command 1 help", parents=[parser_command_1])
+    parser_command_1.add_argument("-o1", "--option1", help="Some option to command 1", required=True)
+    parser_command_1.add_argument("-o2", "--option2", help="Another option to command 1", required=False, default="Op2")
+
+    parser_command_2 = argparse.ArgumentParser(add_help=False)
+    parser_command_2 = subparsers.add_parser("command_2", help="Command 2 help", parents=[parser_command_2])
+    parser_command_2.add_argument("-f", "--flag", help="Some option to command 2", action="store_true")
 
     args = parser.parse_args()
-    if args.version:
-        show_version()
-        sys.exit(0)
 
     # No arguments received
     if len(sys.argv) == 1:
@@ -158,6 +164,8 @@ def main():
     # ---------------------------------------------------------------------------
     #   Application code
     # ---------------------------------------------------------------------------
+    if args.action == "command_1":
+        _log.info(f"Executing {args.action}")
 
     _log.info(f"Aplication end, pid={os.getpid()}")
 
